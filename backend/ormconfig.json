@@ -1,0 +1,8 @@
+{
+    "type": "sqlite",
+    "host": "localhost",
+    "database": "database/sqliteserver.db",
+    "logging": true,
+    "synchronize": true,
+    "entities": ["src/repository/*.ts"]
+}
