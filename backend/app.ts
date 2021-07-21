@@ -7,7 +7,7 @@ app.use(express.json())
 
 const contactRouter = new ContactRouter()
 
-app.use('/', contactRouter.getRoutes())
+app.use('/contact', contactRouter.getRoutes())
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`)

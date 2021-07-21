@@ -14,32 +14,68 @@ export class ContactController {
     }
 
     async getContacts(req: Request, res: Response) {
-        let contacts = await this.contactRepository.find()
-        res.send(contacts)
+        try {
+            let contacts = await this.contactRepository.find()
+            res.send(contacts)
+            
+        } catch (error) {
+            res.status(400).send(error)
+        }
     }
 
-    getContact(req: Request, res: Response) {
-        res.send({})
+    async getContact(req: Request, res: Response) {
+        try {
+            
+            let contact = await this.contactRepository.findOne(req.params.id)
+            res.send(contact)
+        } catch (error) {
+            res.status(400).send(error)
+            
+        }
     }
 
     async createContact(req: Request, res: Response) {
-        let contact: Contact = req.body
-
-        if(!contact) {
-            res.status(400).send('O contato não foi enviado')
+        try {
+            
+            let contact: Contact = req.body
+    
+            if(!contact) {
+                res.status(400).send('O contato não foi enviado')
+            }
+    
+            let newContact = this.contactRepository.create(contact)
+            await this.contactRepository.save(newContact)
+    
+            res.send(newContact)
+        } catch (error) {
+            res.status(400).send(error)
+            
         }
-
-        let newContact = this.contactRepository.create(contact)
-        await this.contactRepository.save(newContact)
-
-        res.send(newContact)
     }
 
-    updateContact(req: Request, res: Response) {
-        return {};
+    async updateContact(req: Request, res: Response) {
+        try {
+            
+            let contact = await this.contactRepository.findOne(req.body.id)
+            contact = this.contactRepository.merge(contact, req.body)
+            let newContact = await this.contactRepository.save(contact)
+    
+            res.send(newContact)
+        } catch (error) {
+            res.status(400).send(error)
+            
+        }
     }
 
-    deleteContact(req: Request, res: Response) {
-        return {};
+    async deleteContact(req: Request, res: Response) {
+        try {
+            let contact = await this.contactRepository.findOne(req.params.id)
+            await this.contactRepository.remove(contact)
+    
+            res.send({})
+        } catch (error) {
+            res.status(400).send(error)
+
+        }
     }
 }
