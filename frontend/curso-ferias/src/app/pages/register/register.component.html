@@ -1,1 +1,14 @@
-<p>register works!</p>
+<div class="card">
+    <div class="card-body">
+        <h1 class="card-title"></h1>
+        <form>
+            <div class="form-group">
+                <label for="name-input">Nome</label>
+                <input type="text" id="name-input" class="form-control" name="name-input" [(ngModel)]="nameInput">
+            </div>
+
+
+            <button type="button" class="btn btn-primary" (click)="printName()">Cadastrar</button>
+        </form>
+    </div>
+</div>
