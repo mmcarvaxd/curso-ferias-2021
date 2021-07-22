@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Contact } from 'src/app/models/contact.model';
 
 @Component({
   selector: 'app-register',
@@ -8,17 +10,55 @@ import { FormGroup } from '@angular/forms';
 })
 export class RegisterComponent implements OnInit {
 
-  nameInput: string = ''
-
   registerFormGroup: FormGroup
+  formSubmitted: boolean = false
 
-  constructor() { }
+  constructor(private formBuilder: FormBuilder,
+    private modalService: NgbModal) { }
 
   ngOnInit(): void {
+
+    this.setForm()
   }
 
-  printName(): void {
+  /**
+   * Function called in the form submit,
+   * calls the back end to register a contact in the database
+   * if the formGroup is valid.
+   */
+  registerContact(): void {
 
-    console.log(this.nameInput)
+    this.formSubmitted = true
+
+    if(this.registerFormGroup.valid) {
+
+      let contact: Contact = this.registerFormGroup.value as Contact
+
+      console.log(contact)
+    }
+  }
+
+  open(content): void {
+
+    this.registerFormGroup = this.formBuilder.group({
+
+      name:['', [Validators.required]],
+      contactNumber:['', [Validators.required, Validators.minLength(10), Validators.maxLength(11)]]
+    })
+
+    this.modalService.open(content).result.then(result => {}, reason => {})
+  }
+
+
+  /**
+   * Private function, sets the formGroup in the ngOnInit function.
+   */
+  private setForm(): void {
+
+    this.registerFormGroup = this.formBuilder.group({
+
+      name:['', [Validators.required]],
+      contactNumber:['', [Validators.required, Validators.minLength(10), Validators.maxLength(11)]]
+    })
   }
 }

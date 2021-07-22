@@ -1,3 +1,52 @@
+<ng-template #editModal let-modal>
+  <div class="modal">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Edição</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <form [formGroup]="editFormGroup">
+
+        <div class="form-group">
+          <label for="name-input">Nome</label>
+          <input type="text" id="name-input" class="form-control" name="name-input" formControlName="name" [ngClass]="{
+          'is-invalid': this.editFormGroup.controls.name.errors
+          }">
+          <div class="invalid-feedback">
+            <p *ngIf="this.editFormGroup.controls.name.errors?.required">
+              O campo nome é necessário.
+            </p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="tel-input">Telefone</label>
+          <input type="text" id="tel-input" class="form-control" name="tel-input" formControlName="contactNumber"
+            placeholder="(00) 0 0000-0000" mask="(00) 0000-0000||(00) 0 0000-0000" [ngClass]="{
+            'is-invalid': this.editFormGroup.controls.contactNumber.errors
+        }">
+          <div class="invalid-feedback">
+            <p *ngIf="this.editFormGroup.controls.contactNumber.errors?.required">
+              O campo telefone é necessário.
+            </p>
+            <p *ngIf="this.editFormGroup.controls.contactNumber.errors?.minlength">
+              O campo telefone deve conter entre 10 e 11 caractéres.
+            </p>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" (click)="modal.dismiss()">Cancelar</button>
+        <button class="btn btn-primary" (click)="modal.close()">Cadastrar</button>
+
+      </form>
+
+    </div>
+  </div>
+</ng-template>
+
 <div class="Buttons">
   <button routerLink="/register" mat-fab color="primary">
     <mat-icon>add</mat-icon>
@@ -29,7 +78,7 @@
   <ng-container matColumnDef="buttons">
     <th mat-header-cell *matHeaderCellDef>Ações</th>
     <td mat-cell *matCellDef="let element">
-      <button (click)="edit()" color="primary" mat-icon-button>
+      <button (click)="open(editModal)" color="primary" mat-icon-button>
         <mat-icon>edit</mat-icon>
       </button>
       <button (click)="deleteItem()" color="primary" mat-icon-button>

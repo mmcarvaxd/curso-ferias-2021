@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [AppComponent, ListComponent, RegisterComponent],
@@ -18,12 +19,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    
+    //Materials sendo usados no projeto:
     MatToolbarModule,
     MatTableModule,
     MatButtonModule,
     MatIconModule,
     NgbModule,
+    NgxMaskModule.forRoot(),
     
+    //Importantes para controle de formulários no angular!!
     FormsModule,
     ReactiveFormsModule
   ],

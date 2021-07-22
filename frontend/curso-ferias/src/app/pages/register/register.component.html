@@ -1,14 +1,89 @@
-<div class="card">
+<div class="card mt-5 mx-auto col-md-8 col-lg-6">
     <div class="card-body">
-        <h1 class="card-title"></h1>
-        <form>
+        <h1 class="card-title">Cadastro</h1>
+
+        <form (ngSubmit)="registerContact()" [formGroup]="registerFormGroup">
+
             <div class="form-group">
                 <label for="name-input">Nome</label>
-                <input type="text" id="name-input" class="form-control" name="name-input" [(ngModel)]="nameInput">
+                <input type="text" id="name-input" class="form-control" name="name-input" formControlName="name"
+                [ngClass]="{
+                    'is-invalid': this.registerFormGroup.controls.name.errors && this.formSubmitted
+                }">
+                <div class="invalid-feedback">
+                    <p *ngIf="this.registerFormGroup.controls.name.errors?.required">
+                        O campo nome é necessário.
+                    </p>
+                </div>
             </div>
-
-
-            <button type="button" class="btn btn-primary" (click)="printName()">Cadastrar</button>
+            <div class="form-group">
+                <label for="tel-input">Telefone</label>
+                <input type="text" id="tel-input" class="form-control" name="tel-input" formControlName="contactNumber"
+                placeholder="(00) 0 0000-0000" mask="(00) 0000-0000||(00) 0 0000-0000" [ngClass]="{
+                    'is-invalid': this.registerFormGroup.controls.contactNumber.errors && this.formSubmitted
+                }">
+                <div class="invalid-feedback">
+                    <p *ngIf="this.registerFormGroup.controls.contactNumber.errors?.required">
+                        O campo telefone é necessário.
+                    </p>
+                    <p *ngIf="this.registerFormGroup.controls.contactNumber.errors?.minlength">
+                        O campo telefone deve conter entre 10 e 11 caractéres.
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-outline-primary mr-3" (click)="open(editModal)">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+            </div>
         </form>
     </div>
 </div>
+
+<ng-template #editModal let-modal>
+    <div class="modal">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Edição</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+  
+        <form [formGroup]="registerFormGroup">
+  
+          <div class="form-group">
+            <label for="name-input">Nome</label>
+            <input type="text" id="name-input" class="form-control" name="name-input" formControlName="name" [ngClass]="{
+            'is-invalid': this.registerFormGroup.controls.name.errors
+            }">
+            <div class="invalid-feedback">
+              <p *ngIf="this.registerFormGroup.controls.name.errors?.required">
+                O campo nome é necessário.
+              </p>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="tel-input">Telefone</label>
+            <input type="text" id="tel-input" class="form-control" name="tel-input" formControlName="contactNumber"
+              placeholder="(00) 0 0000-0000" mask="(00) 0000-0000||(00) 0 0000-0000" [ngClass]="{
+              'is-invalid': this.registerFormGroup.controls.contactNumber.errors
+          }">
+            <div class="invalid-feedback">
+              <p *ngIf="this.registerFormGroup.controls.contactNumber.errors?.required">
+                O campo telefone é necessário.
+              </p>
+              <p *ngIf="this.registerFormGroup.controls.contactNumber.errors?.minlength">
+                O campo telefone deve conter entre 10 e 11 caractéres.
+              </p>
+            </div>
+          </div>
+  
+          <button class="btn btn-primary" (click)="modal.dismiss()">Cancelar</button>
+          <button class="btn btn-primary" (click)="modal.close()">Cadastrar</button>
+  
+        </form>
+  
+      </div>
+    </div>
+  </ng-template>
