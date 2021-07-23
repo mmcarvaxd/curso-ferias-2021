@@ -1,49 +1,70 @@
 <ng-template #content let-modal>
-    <div class="modal-header">
-      <h2 class="modal-title">Edição</h2>
-      <button type="button" class="close" (click)="modal.dismiss()">
-        <span>&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-
-      <form [formGroup]="editFormGroup">
-
-        <div class="form-group">
-          <label for="name-input">Nome</label>
-          <input type="text" id="name-input" class="form-control" name="name-input" formControlName="name" [ngClass]="{
-          'is-invalid': this.editFormGroup.controls.name.errors
-          }">
-          <div class="invalid-feedback">
-            <p *ngIf="this.editFormGroup.controls.name.errors?.required">
-              O campo nome é necessário.
-            </p>
-          </div>
+  <div class="modal-header">
+    <h2 class="modal-title">Edição</h2>
+    <button type="button" class="close" (click)="modal.dismiss()">
+      <span>&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="editFormGroup">
+      <div class="form-group">
+        <label for="name-input">Nome</label>
+        <input
+          type="text"
+          id="name-input"
+          class="form-control"
+          name="name-input"
+          formControlName="name"
+          [ngClass]="{
+            'is-invalid': this.editFormGroup.controls.name.errors
+          }"
+        />
+        <div class="invalid-feedback">
+          <p *ngIf="this.editFormGroup.controls.name.errors?.required">
+            O campo nome é necessário.
+          </p>
         </div>
+      </div>
 
-        <div class="form-group">
-          <label for="tel-input">Telefone</label>
-          <input type="text" id="tel-input" class="form-control" name="tel-input" formControlName="contactNumber"
-            placeholder="(00) 0 0000-0000" mask="(00) 0000-0000||(00) 0 0000-0000" [ngClass]="{
+      <div class="form-group">
+        <label for="tel-input">Telefone</label>
+        <input
+          type="text"
+          id="tel-input"
+          class="form-control"
+          name="tel-input"
+          formControlName="contactNumber"
+          placeholder="(00) 0 0000-0000"
+          mask="(00) 0000-0000||(00) 0 0000-0000"
+          [ngClass]="{
             'is-invalid': this.editFormGroup.controls.contactNumber.errors
-            }">
-          <div class="invalid-feedback">
-            <p *ngIf="this.editFormGroup.controls.contactNumber.errors?.required">
-              O campo telefone é necessário.
-            </p>
-            <p *ngIf="this.editFormGroup.controls.contactNumber.errors?.minlength">
-              O campo telefone deve conter entre 10 e 11 caractéres.
-            </p>
-          </div>
+          }"
+        />
+        <div class="invalid-feedback">
+          <p *ngIf="this.editFormGroup.controls.contactNumber.errors?.required">
+            O campo telefone é necessário.
+          </p>
+          <p
+            *ngIf="this.editFormGroup.controls.contactNumber.errors?.minlength"
+          >
+            O campo telefone deve conter entre 10 e 11 caractéres.
+          </p>
         </div>
-        
-      </form>
-      
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-outline-primary" (click)="modal.dismiss()">Cancelar</button>
-      <button class="btn btn-primary" (click)="modal.close()" [disabled]="this.editFormGroup.invalid">Cadastrar</button>
-    </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-outline-primary" (click)="modal.dismiss()">
+      Cancelar
+    </button>
+    <button
+      class="btn btn-primary"
+      (click)="modal.close()"
+      [disabled]="this.editFormGroup.invalid"
+    >
+      Editar
+    </button>
+  </div>
 </ng-template>
 
 <div class="Buttons">
@@ -80,7 +101,7 @@
       <button (click)="open(content, element)" color="primary" mat-icon-button>
         <mat-icon>edit</mat-icon>
       </button>
-      <button (click)="deleteItem()" color="primary" mat-icon-button>
+      <button (click)="deleteItem(element.id)" color="primary" mat-icon-button>
         <mat-icon>delete</mat-icon>
       </button>
     </td>
