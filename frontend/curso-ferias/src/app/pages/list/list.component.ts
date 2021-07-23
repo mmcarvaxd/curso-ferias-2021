@@ -10,7 +10,7 @@ import { Contact } from 'src/app/models/contact.model';
 })
 export class ListComponent implements OnInit {
   dataSource: Contact[] = [
-    { id: 1, name: 'Renato', contactNumber: '111111111' },
+    { id: 1, name: 'Renato', contactNumber: '1111111111' },
   ];
 
   displayedColumns: string[] = ['id', 'name', 'contactNumber', 'buttons'];
@@ -25,15 +25,19 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  open(content): void {
+  open(content, contact: Contact): void {
 
-    this.editFormGroup = this.formBuilder.group({
+    this.setForm(contact)
 
-      name:['', [Validators.required]],
-      contactNumber:['', [Validators.required, Validators.minLength(10), Validators.maxLength(11)]]
-    })
+    this.modalService.open(content).result.then((result) => {
 
-    this.modalService.open(content).result.then(result => {}, reason => {})
+      if(this.editFormGroup.valid) {
+
+        console.log(this.editFormGroup.value)
+      }
+
+    }, (reason) => {
+    });
   }
 
   edit() {
@@ -46,5 +50,14 @@ export class ListComponent implements OnInit {
 
   add() {
     console.log('add');
+  }
+
+  private setForm(contact: Contact): void {
+
+    this.editFormGroup = this.formBuilder.group({
+
+      name:[contact.name, [Validators.required]],
+      contactNumber:[contact.contactNumber, [Validators.required, Validators.minLength(10), Validators.maxLength(11)]]
+    })
   }
 }
