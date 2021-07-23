@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Contact } from 'src/app/models/contact.model';
 
 @Component({
@@ -13,8 +12,7 @@ export class RegisterComponent implements OnInit {
   registerFormGroup: FormGroup
   formSubmitted: boolean = false
 
-  constructor(private formBuilder: FormBuilder,
-    private modalService: NgbModal) { }
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
 
@@ -37,18 +35,6 @@ export class RegisterComponent implements OnInit {
       console.log(contact)
     }
   }
-
-  open(content): void {
-
-    this.registerFormGroup = this.formBuilder.group({
-
-      name:['', [Validators.required]],
-      contactNumber:['', [Validators.required, Validators.minLength(10), Validators.maxLength(11)]]
-    })
-
-    this.modalService.open(content).result.then(result => {}, reason => {})
-  }
-
 
   /**
    * Private function, sets the formGroup in the ngOnInit function.
